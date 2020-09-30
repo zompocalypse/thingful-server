@@ -18,14 +18,12 @@ function requireAuth(req, res, next) {
   authService
     .getUserWithUserName(req.app.get("db"), tokenUsername)
     .then((user) => {
-      console.log(user.password);
       if (!user || user.password !== tokenPassword) {
         return res.status(401).json({ error: "Unauthorized request" });
       }
       req.user = user;
+      next();
     });
-
-  next();
 }
 
 module.exports = {

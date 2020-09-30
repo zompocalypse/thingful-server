@@ -64,18 +64,6 @@ describe("Things Endpoints", function () {
   });
 
   describe(`GET /api/things/:thing_id`, () => {
-    describe(`Protected endpoints`, () => {
-      beforeEach("insert articles", () =>
-        helpers.seedThingsTables(db, testUsers, testThings, testReviews)
-      );
-      describe(`GET /api/things/:thing_id`, () => {
-        it(`responds with 401 'Missing basic token' when no basic token`, () => {
-          return supertest(app)
-            .get(`/api/things/123`)
-            .expect(401, { error: `Missing basic token` });
-        });
-      });
-    });
     context(`Given no things`, () => {
       it(`responds with 404`, () => {
         const thingId = 123456;
@@ -119,7 +107,7 @@ describe("Things Endpoints", function () {
       it("removes XSS attack content", () => {
         return supertest(app)
           .get(`/api/things/${maliciousThing.id}`)
-          .set("Authorization", helpers.makeAuthHeader(testUsers[0]))
+          .set("Authorization", helpers.makeAuthHeader(testUser))
           .expect(200)
           .expect((res) => {
             expect(res.body.title).to.eql(expectedThing.title);
