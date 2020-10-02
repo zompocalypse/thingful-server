@@ -35,7 +35,7 @@ describe('Reviews Endpoints', function () {
         rating: 3,
         thing_id: testThing.id,
         user_id: testUser.id,
-      };
+      }
       return supertest(app)
         .post('/api/reviews')
         .set('Authorization', helpers.makeAuthHeader(testUsers[0]))
@@ -70,7 +70,7 @@ describe('Reviews Endpoints', function () {
         )
     })
 
-    const requiredFields = ['text', 'rating', 'thing_id'];
+    const requiredFields = ['text', 'rating', 'thing_id']
 
     requiredFields.forEach((field) => {
       const testThing = testThings[0]
@@ -80,7 +80,7 @@ describe('Reviews Endpoints', function () {
         rating: 3,
         user_id: testUser.id,
         thing_id: testThing.id,
-      };
+      }
 
       it(`responds with 400 and an error message when the '${field}' is missing`, () => {
         delete newReview[field]
